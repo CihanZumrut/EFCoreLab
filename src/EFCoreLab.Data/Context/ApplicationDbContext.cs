@@ -1,4 +1,5 @@
-﻿using EFCoreLab.Data.Models;
+﻿
+using EFCoreLab.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace EFCoreLab.Data.Context
         public  ApplicationDbContext()
         {
         }
+
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
