@@ -84,7 +84,6 @@ PostgreSQL	Npgsql.EntityFrameworkCore.PostgreSQL
 SQLite	Microsoft.EntityFrameworkCore.SQLite
 SQL Compact	EntityFrameworkCore.SqlServerCompact40
 In-memory	Microsoft.EntityFrameworkCore.InMemory
-Learn to install EF Core in the next chapter.
 
 Source: "https://www.entityframeworktutorial.net/efcore/entity-framework-core.aspx"
 
