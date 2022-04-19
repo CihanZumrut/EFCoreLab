@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreLab.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220419122928_initialMigration")]
+    [Migration("20220419141707_initialMigration")]
     partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,36 @@ namespace EFCoreLab.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("EFCoreLab.Data.Models.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("author");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("books");
+                });
 
             modelBuilder.Entity("EFCoreLab.Data.Models.Course", b =>
                 {
@@ -43,7 +73,7 @@ namespace EFCoreLab.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("courses");
                 });
 
             modelBuilder.Entity("EFCoreLab.Data.Models.Student", b =>
@@ -55,6 +85,10 @@ namespace EFCoreLab.Data.Migrations
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int")
+                        .HasColumnName("address_id");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2")
@@ -79,9 +113,47 @@ namespace EFCoreLab.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId")
+                        .IsUnique();
+
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Students");
+                    b.ToTable("students");
+                });
+
+            modelBuilder.Entity("EFCoreLab.Data.Models.StudentAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("city");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("country");
+
+                    b.Property<string>("District")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("district");
+
+                    b.Property<string>("FullAddress")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("full_address");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("student_addresses");
                 });
 
             modelBuilder.Entity("EFCoreLab.Data.Models.Teacher", b =>
@@ -110,19 +182,50 @@ namespace EFCoreLab.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("teachers");
+                });
+
+            modelBuilder.Entity("EFCoreLab.Data.Models.Book", b =>
+                {
+                    b.HasOne("EFCoreLab.Data.Models.Student", "Student")
+                        .WithMany("Books")
+                        .HasForeignKey("StudentId")
+                        .HasConstraintName("student_book_id_fk")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("EFCoreLab.Data.Models.Student", b =>
                 {
+                    b.HasOne("EFCoreLab.Data.Models.StudentAddress", "Address")
+                        .WithOne("Student")
+                        .HasForeignKey("EFCoreLab.Data.Models.Student", "AddressId")
+                        .HasConstraintName("student_address_student_id_fk")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("EFCoreLab.Data.Models.Course", null)
                         .WithMany("Students")
                         .HasForeignKey("CourseId");
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("EFCoreLab.Data.Models.Course", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("EFCoreLab.Data.Models.Student", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("EFCoreLab.Data.Models.StudentAddress", b =>
+                {
+                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }

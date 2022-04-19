@@ -11,5 +11,9 @@ namespace EFCoreLab.Data.Models
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public int Number { get; set; }
+        public int AddressId { get; set; }
+        public virtual StudentAddress Address { get; set; }
+        public ICollection<Book> Books { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }
