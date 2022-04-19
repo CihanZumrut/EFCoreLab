@@ -12,7 +12,7 @@ namespace EFCoreLab.Data.Context
         {
         }
 
-        protected ApplicationDbContext()
+        public  ApplicationDbContext()
         {
         }
 
@@ -21,7 +21,7 @@ namespace EFCoreLab.Data.Context
             if (!optionsBuilder.IsConfigured)
             {
                 //make the configurations.
-                optionsBuilder.UseSqlServer("");
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreLab;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True;");
             }
         }
 
@@ -31,7 +31,7 @@ namespace EFCoreLab.Data.Context
 
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.ToTable("students");
+                entity.ToTable("Students");
 
                 entity.Property(i => i.Id).HasColumnName("id").HasColumnType("int").UseIdentityColumn().IsRequired();
                 entity.Property(i => i.FirstName).HasColumnName("first_name").HasColumnType("nvarchar").HasMaxLength(250);
@@ -42,7 +42,7 @@ namespace EFCoreLab.Data.Context
 
             modelBuilder.Entity<Teacher>(entity =>
             {
-                entity.ToTable("teachers");
+                entity.ToTable("Teachers");
 
                 entity.Property(i => i.Id).HasColumnName("id").UseIdentityColumn();
                 entity.Property(i => i.FirstName).HasColumnName("first_name").HasColumnType("nvarchar").HasMaxLength(100);
@@ -52,7 +52,7 @@ namespace EFCoreLab.Data.Context
 
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.ToTable("courses");
+                entity.ToTable("Courses");
 
                 entity.Property(i => i.Id).HasColumnName("id").UseIdentityColumn();
                 entity.Property(i => i.Name).HasColumnName("name").HasColumnType("nvarchar").HasMaxLength(100);
