@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ReadMe.txt = ReadMe.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreLab.Common", "src\EFCoreLab.Common\EFCoreLab.Common\EFCoreLab.Common.csproj", "{FE45C828-05C4-47EF-90D0-39596FC7FD18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{20555A39-1FDF-46B9-9F23-A01C14C50557}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20555A39-1FDF-46B9-9F23-A01C14C50557}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20555A39-1FDF-46B9-9F23-A01C14C50557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE45C828-05C4-47EF-90D0-39596FC7FD18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE45C828-05C4-47EF-90D0-39596FC7FD18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE45C828-05C4-47EF-90D0-39596FC7FD18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE45C828-05C4-47EF-90D0-39596FC7FD18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

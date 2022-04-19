@@ -1,4 +1,5 @@
 ﻿
+using EFCoreLab.Common;
 using EFCoreLab.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,13 +21,15 @@ namespace EFCoreLab.Data.Context
         public DbSet<Course> Courses { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<StudentAddress> StudentAddresses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 //make the configurations.
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreLab;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(StringConstants.DbConnectionString);
             }
         }
 
