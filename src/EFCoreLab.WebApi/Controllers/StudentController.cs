@@ -2,6 +2,7 @@
 using EFCoreLab.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EFCoreLab.WebApi.Controllers
@@ -20,12 +21,22 @@ namespace EFCoreLab.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-           var student = await applicationDbContext.Students.ToListAsync();
-           return Ok(student);
+
+
+            var allStudents = await applicationDbContext.Students.ToListAsync();
+            var lastNameFiltered = await applicationDbContext.Students
+                .Where(i => i.LastName == "Kaya") //Linq and Lambda Express
+                .Where(i => i.FirstName != "Cihan")
+                .OrderBy(i => i.FirstName)
+                .OrderByDescending(i => i.Number)    
+                .ToListAsync();
+            
+            var student = await applicationDbContext.Students.ToListAsync();
+            return Ok(student);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add() //Normal şartlarda burada DTO'lar kullanılır.
+        public async Task<IActionResult> Add()
         {
             Student st = new Student()
             {
@@ -50,8 +61,8 @@ namespace EFCoreLab.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var student = await applicationDbContext.Students.FindAsync(id);
-            applicationDbContext.Students.Remove(student);
+            var student = await applicationDbContext.StudentAddresses.FindAsync(id);
+            applicationDbContext.StudentAddresses.Remove(student);
 
             await applicationDbContext.SaveChangesAsync();
 
